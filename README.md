@@ -1,5 +1,6 @@
 # Shopme-eCommerce
 
+My goals for this personal project (working in progress) are:
 * Develop a complete shopping website using Java, Spring Boot, Thymeleaf, Bootstrap, jQuery and MySQL database
 * Code the Shopping application allowing customers to browse products and place orders
 * Use Spring Data JPA with Hibernate for the data access layer
