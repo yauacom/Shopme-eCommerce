@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Create New User</title>
+  <title>[[${pageTitle}]]</title>
   <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" type="text/css" />
   <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
   <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
@@ -130,7 +130,7 @@
   </div>
 <div class="container-fluid">
   <div>
-  <h2>Manage Users | Create New User</h2>
+  <h2>Manage Users | [[${pageTitle}]]</h2>
     <form
         th:action="@{/users/save}"
         method ="post"
@@ -138,6 +138,8 @@
         th:object="${user}"
         onsubmit="return checkEmailUnique(this)"
     >
+      <input type="hidden" th:field="*{id}"/>
+
       <div class = "border border-secondary rounded p-3">
 
           <div class = "form-group row">
@@ -186,10 +188,19 @@
             <label class="col-sm-4 col-form-label">Password</label>
             <div class="col-sm-8">
               <input
+                  th:if="${user.id == null}"
                   type="password"
                   class="form-control"
                   th:field="*{password}"
                   required
+                  minlength="8"
+                  maxlength="20"
+              />
+              <input
+                  th:if="${user.id != null}"
+                  type="password"
+                  class="form-control"
+                  th:field="*{password}"
                   minlength="8"
                   maxlength="20"
               />
@@ -267,8 +278,9 @@
   function checkEmailUnique(form) {
     url = "[[@{/users/check_email}]]";
     userEmail = $("#email").val();
+    userId =$("#id").val();
     csrfValue = $("input[name='_csrf']").val();
-    params = {email: userEmail, _csrf: csrfValue};
+    params = {id: userId, email: userEmail, _csrf: csrfValue};
 
 
     $.post(url, params, (response) => {
