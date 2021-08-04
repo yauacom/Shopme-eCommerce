@@ -32,12 +32,17 @@ public class UserService {
   }
 
   public void save(User newUser) {
-encodedPassword(newUser);
+    encodedPassword(newUser);
     userRepository.save(newUser);
   }
 
   private void encodedPassword(User user){
     String encodedPassword = passwordEncoder.encode(user.getPassword());
     user.setPassword(encodedPassword);
+  }
+
+  public boolean isEmailUnique(String email) {
+    User userByEmail = userRepository.getUserByEmail(email);
+    return userByEmail == null;
   }
 }
