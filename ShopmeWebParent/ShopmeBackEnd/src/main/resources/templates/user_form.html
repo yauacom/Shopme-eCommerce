@@ -13,7 +13,12 @@
 
 <body>
   <div>
-    <form th:action="@{/logout}" method="post" th:hidden="true" name="logoutForm" >
+    <form
+
+        th:action="@{/logout}"
+        method="post"
+        th:hidden="true"
+        name="logoutForm" >
       <input type="submit" />
     </form>
     <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
@@ -132,6 +137,7 @@
   <div>
   <h2>Manage Users | [[${pageTitle}]]</h2>
     <form
+        enctype="multipart/form-data"
         th:action="@{/users/save}"
         method ="post"
         style="max-width: 700px; margin: 0 auto"
@@ -230,6 +236,30 @@
             </div>
           </div>
 
+        <div class = "form-group row">
+          <label class="col-sm-4 col-form-label">Photos:</label>
+          <div class="col-sm-8">
+            <input
+              type="hidden"
+              th:field="*{photos}"
+            />
+            <input
+                name="image"
+                type="file"
+                id="fileImage"
+                accept="image/png, image/jpeg, image/jpg"
+                class="mb-2"
+            />
+            <img
+                class="img-fluid"
+                id="thumbnail"
+                th:src="@{${user.photosImagePath}}"
+                style = "width: 100px;"
+                alt="photo-review"
+            />
+          </div>
+        </div>
+
         <div class="text-center">
           <input class="btn btn-primary m-3" type="submit" value="Save"/>
           <input
@@ -273,7 +303,31 @@
     $("#buttonCancel").on("click", () => {
       window.location = "[[@{/users}]]";
     });
+
+    $("#fileImage").change(function() {
+      fileSize = this.files[0].size;
+
+      if (fileSize > 1048576) {
+        this.setCustomValidity("Please choose another image less than 1MB.");
+        this.reportValidity();
+      } else {
+        this.setCustomValidity("");
+        showImageThumbnail(this);
+      }
+
+
+    })
   });
+
+  function showImageThumbnail(fileInput) {
+    let file = fileInput.files[0];
+    let reader = new FileReader();
+    reader.onload = function(e) {
+      $("#thumbnail").attr("src", e.target.result);
+    }
+
+    reader.readAsDataURL(file);
+  }
 
   function checkEmailUnique(form) {
     url = "[[@{/users/check_email}]]";
