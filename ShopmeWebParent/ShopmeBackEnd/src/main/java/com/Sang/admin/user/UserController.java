@@ -2,19 +2,24 @@ package com.Sang.admin.user;
 
 import com.Sang.ShopmeCommon.entity.Role;
 import com.Sang.ShopmeCommon.entity.User;
+import com.Sang.admin.FileUploadUtil;
+import java.io.IOException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class UserController {
 
-  private UserService userService;
+  private final UserService userService;
 
   @Autowired
   public UserController(UserService userService) {
@@ -42,9 +47,25 @@ public class UserController {
   }
 
   @PostMapping("/users/save")
-  public String saveUser(User newUser, RedirectAttributes redirectAttributes) {
-    System.out.println(newUser);
-    userService.save(newUser);
+  public String saveUser(
+      User newUser,
+      RedirectAttributes redirectAttributes,
+      @RequestParam("image") MultipartFile multipartFile
+    ) throws IOException {
+    if(!multipartFile.isEmpty()) {
+    String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+      newUser.setPhotos(fileName);
+      User savedUser = userService.save(newUser);
+    String uploadDir = "ShopmeWebParent/ShopmeBackEnd/user-photos/" + savedUser.getId();
+
+    FileUploadUtil.cleanDir(uploadDir);
+    FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
+    } else {
+      if (newUser.getPhotos().isEmpty()) {
+        newUser.setPhotos(null);
+      }
+      userService.save(newUser);
+    }
 
     redirectAttributes.addFlashAttribute("message", "The user has been saved successfully");
 
