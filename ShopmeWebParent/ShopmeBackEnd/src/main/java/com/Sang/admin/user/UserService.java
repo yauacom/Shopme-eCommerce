@@ -4,11 +4,13 @@ import com.Sang.ShopmeCommon.entity.Role;
 import com.Sang.ShopmeCommon.entity.User;
 import java.util.List;
 import java.util.NoSuchElementException;
+import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
+@Transactional
 public class UserService {
 
   private UserRepository userRepository;
@@ -89,4 +91,9 @@ public class UserService {
       throw new UserNotFoundException("Could not find any user with ID " + id);
     }
   }
+
+  public void updateUserEnabledStatus(Integer id, boolean enabled) {
+    userRepository.updateEnabledStatus(id, enabled);
+  }
+
 }
