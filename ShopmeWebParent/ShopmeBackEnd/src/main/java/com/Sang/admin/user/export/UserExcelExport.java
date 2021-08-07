@@ -1,10 +1,8 @@
-package com.Sang.admin.user;
+package com.Sang.admin.user.export;
 
 import com.Sang.ShopmeCommon.entity.User;
+import com.Sang.admin.user.AbstractExport;
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
@@ -17,7 +15,7 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 
-public class UserExcelExport extends AbstractExport{
+public class UserExcelExport extends AbstractExport {
 
   private final XSSFWorkbook workbook;
   private XSSFSheet sheet;

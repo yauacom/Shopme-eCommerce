@@ -29,12 +29,17 @@
         th:href="@{/users/export/pdf}">
     </a>
 
+<!-- Begin Show message-->
     <div
         th:if="${message != null}"
         class="alert alert-success text-center"
     >
       [[${message}]]
     </div>
+
+<!--    End Show message-->
+
+
 <!--    Search Form-->
     <div>
       <form
