@@ -5,6 +5,7 @@ import com.Sang.ShopmeCommon.entity.User;
 import com.Sang.admin.FileUploadUtil;
 import java.io.IOException;
 import java.util.List;
+import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
@@ -98,7 +99,12 @@ public class UserController {
 
     redirectAttributes.addFlashAttribute("message", "The user has been saved successfully");
 
-    return "redirect:/users";
+    return getRedirectURLtoEffectedUser(newUser);
+  }
+
+  private String getRedirectURLtoEffectedUser(User newUser) {
+    String firstPartOfEmail = newUser.getEmail().split("@")[0];
+    return "redirect:/users/page/1?sortField=id&sortDir=asc&keyword=" + firstPartOfEmail;
   }
 
   @GetMapping("/users/edit/{id}")
@@ -138,5 +144,26 @@ public class UserController {
     String message = "The user ID " + id + " has been " + status;
     redirectAttributes.addFlashAttribute("message", message);
     return "redirect:/users";
+  }
+
+  @GetMapping("/users/export/csv")
+  public void exportToCSV(HttpServletResponse response) throws IOException {
+    List<User> listUsers = userService.listAll();
+    UserCsvExport exporter = new UserCsvExport();
+    exporter.export(listUsers, response);
+  }
+
+  @GetMapping("/users/export/excel")
+  public void exportToExcel(HttpServletResponse response) throws IOException {
+    List<User> listUsers = userService.listAll();
+    UserExcelExport exporter = new UserExcelExport();
+    exporter.export(listUsers, response);
+  }
+
+  @GetMapping("/users/export/pdf")
+  public void exportToPDF(HttpServletResponse response) throws IOException {
+    List<User> listUsers = userService.listAll();
+    UserPdfExport exporter = new UserPdfExport();
+    exporter.export(listUsers, response);
   }
 }
