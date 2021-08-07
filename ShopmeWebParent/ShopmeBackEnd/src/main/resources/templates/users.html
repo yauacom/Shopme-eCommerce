@@ -1,136 +1,14 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http:://www.thymeleaf.org">
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Home - Shopme Admin</title>
-  <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" type="text/css" />
-  <link rel="stylesheet" th:href="@{/fontawesome/all.css}" type="text/css" />
-  <link rel="stylesheet" th:href="@{/style.css}" type="text/css" />
-  <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
-  <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<head th:replace="fragments :: page_head('User - Shopme Admin')">
 </head>
 
 <body>
-  <div>
-    <form th:action="@{/logout}" method="post" th:hidden="true" name="logoutForm">
-      <input type="submit" />
-    </form>
-    <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
-      <a class="navbar-brand" th:href="@{/}">
-        <img th:src="@{/images/ShopmeAdminSmall.png}" />
-      </a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#topNavbar">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="topNavbar">
-        <ul class="navbar-nav">
-
-          <th:block sec:authorize="hasAuthority('Admin')">
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" data-toggle="dropdown"
-                 th:href="@{/users}">Users</a>
-              <div class="dropdown-menu">
-                <a class="dropdown-item" th:href="@{/users/new}">Create New</a>
-                <a class="dropdown-item" th:href="@{/users}">View All</a>
-              </div>
-            </li>
-          </th:block>
-
-          <th:block sec:authorize="hasAnyAuthority('Admin', 'Editor')">
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" data-toggle="dropdown"
-                 th:href="@{/categories}">Categories</a>
-              <div class="dropdown-menu">
-                <a class="dropdown-item" th:href="@{/categories/new}">Create New</a>
-                <a class="dropdown-item" th:href="@{/categories}">View All</a>
-              </div>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" data-toggle="dropdown"
-                 th:href="@{/brands}">Brands</a>
-              <div class="dropdown-menu">
-                <a class="dropdown-item" th:href="@{/brands/new}">Create New</a>
-                <a class="dropdown-item" th:href="@{/brands}">View All</a>
-              </div>
-            </li>
-          </th:block>
-
-          <th:block sec:authorize="hasAnyAuthority('Admin', 'Salesperson', 'Editor', 'Shipper')">
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" data-toggle="dropdown"
-                 th:href="@{/products}">Products</a>
-              <div class="dropdown-menu">
-                <a class="dropdown-item" th:href="@{/products/new}"
-                   sec:authorize="hasAnyAuthority('Admin', 'Editor')">Create New</a>
-                <a class="dropdown-item" th:href="@{/products}">View All</a>
-              </div>
-            </li>
-          </th:block>
-
-          <th:block sec:authorize="hasAnyAuthority('Admin', 'Salesperson')">
-            <li class="nav-item">
-              <a class="nav-link" th:href="@{/customers}">Customers</a>
-            </li>
-
-            <li class="nav-item">
-              <a class="nav-link" th:href="@{/shipping_rates}">Shipping Rates</a>
-            </li>
-          </th:block>
-
-          <th:block sec:authorize="hasAnyAuthority('Admin', 'Salesperson', 'Shipper')">
-            <li class="nav-item">
-              <a class="nav-link" th:href="@{/orders}">Orders</a>
-            </li>
-          </th:block>
-
-          <th:block sec:authorize="hasAnyAuthority('Admin', 'Salesperson')">
-            <li class="nav-item">
-              <a class="nav-link" th:href="@{/report}">Sales Report</a>
-            </li>
-          </th:block>
-
-          <th:block sec:authorize="hasAnyAuthority('Admin', 'Editor')">
-            <li class="nav-item">
-              <a class="nav-link" th:href="@{/articles}">Articles</a>
-            </li>
-
-            <li class="nav-item">
-              <a class="nav-link" th:href="@{/menus}">Menus</a>
-            </li>
-          </th:block>
-
-          <li class="nav-item dropdown" sec:authorize="hasAuthority('Admin')">
-            <a class="nav-link dropdown-toggle" data-toggle="dropdown"
-               th:href="@{/settings}">Settings</a>
-            <div class="dropdown-menu">
-              <a class="dropdown-item" th:href="@{/settings#general}">General</a>
-              <a class="dropdown-item" th:href="@{/settings#countries}">Countries</a>
-              <a class="dropdown-item" th:href="@{/settings#states}">States</a>
-              <a class="dropdown-item" th:href="@{/settings#mailServer}">Mail Server</a>
-              <a class="dropdown-item" th:href="@{/settings#mailTemplate}">Mail Templates</a>
-              <a class="dropdown-item" th:href="@{/settings#payment}">Payment</a>
-            </div>
-          </li>
-          <li>
-            <span class="fas fa-user fa-2x icon-silver"></span>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" data-toggle="dropdown"
-               th:href="@{/account}"
-               sec:authentication="principal.fullname"></a>
-            <div class="dropdown-menu">
-              <a class="dropdown-item" id="logoutLink" href="">Logout</a>
-            </div>
-          </li>
-        </ul>
-      </div>
-
-    </nav>
-  </div>
+<div th:replace="navigation :: menu"></div>
 <div class="container-fluid">
+
+
   <div>
   <h2 class = "mt-2 mb-4">Manage Users</h2>
 
@@ -309,9 +187,7 @@
     </div>
   </div>
 
-  <div class="text-center">
-    <p>Shopme Control Panel - Copyright &copy; Shopme</p>
-  </div>
+  <div th:replace="fragments :: footer"></div>
 
 </div>
 <script type="text/javascript" >
