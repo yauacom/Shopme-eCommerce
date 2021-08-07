@@ -1,6 +1,7 @@
-package com.Sang.admin.user;
+package com.Sang.admin.user.export;
 
 import com.Sang.ShopmeCommon.entity.User;
+import com.Sang.admin.user.AbstractExport;
 import com.lowagie.text.Document;
 import com.lowagie.text.Font;
 import com.lowagie.text.FontFactory;
@@ -16,7 +17,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
 
-public class UserPdfExport extends AbstractExport{
+public class UserPdfExport extends AbstractExport {
 
   public void export(List<User> listUsers, HttpServletResponse response) throws IOException {
     super.setResponseHeader(response, "application/pdf", ".pdf");

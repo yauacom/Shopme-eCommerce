@@ -18,9 +18,9 @@ import org.springframework.stereotype.Service;
 public class UserService {
 
   public static final int USERS_PER_PAGE = 4;
-  private UserRepository userRepository;
-  private RoleRepository roleRepository;
-  private PasswordEncoder passwordEncoder;
+  private final UserRepository userRepository;
+  private final RoleRepository roleRepository;
+  private final PasswordEncoder passwordEncoder;
 
   @Autowired
   public UserService(UserRepository userRepository,
@@ -30,6 +30,11 @@ public class UserService {
     this.roleRepository = roleRepository;
     this.passwordEncoder = passwordEncoder;
   }
+
+  public User getUserByEmail (String email) {
+    return userRepository.getUserByEmail(email);
+  }
+
 
   public List<User> listAll() {
     return (List<User>) userRepository.findAll(Sort.by("firstName").ascending());
@@ -64,8 +69,25 @@ public class UserService {
       encodedPassword(user);
     }
 
-
     return userRepository.save(user);
+  }
+
+  public User updateAccount(User userInForm) {
+    User userInDatabase = userRepository.findById(userInForm.getId()).get();
+
+    if(!userInForm.getPassword().isEmpty()) {
+      userInDatabase.setPassword(userInForm.getPassword());
+      encodedPassword(userInDatabase);
+    }
+
+    if(userInForm.getPhotos() != null) {
+      userInDatabase.setPhotos(userInForm.getPhotos());
+    }
+
+    userInDatabase.setFirstName(userInForm.getFirstName());
+    userInDatabase.setLastName(userInForm.getLastName());
+
+    return userRepository.save(userInDatabase);
   }
 
   private void encodedPassword(User user){

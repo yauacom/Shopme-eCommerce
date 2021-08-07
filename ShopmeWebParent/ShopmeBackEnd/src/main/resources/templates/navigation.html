@@ -55,19 +55,23 @@
           <span class = "fas fa-user fa-2x icon-silver"></span>
         </li>
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle"
-             data-toggle="dropdown"
-             sec:authentication="principal.fullname"></a>
-          <div class="dropdown-menu">
+          <p class="nav-link dropdown-toggle mb-0"
+                  id="dropdownMenuButton"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                  sec:authentication="principal.fullname">
+          </p>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item"  th:href="@{/account}">Account Details</a>
             <a class="dropdown-item"
                href=""
-               id = "logoutLink"
+               id="logoutLink"
             >Logout</a>
           </div>
         </li>
       </ul>
     </div>
-
   </nav>
 </div>
 </body>
