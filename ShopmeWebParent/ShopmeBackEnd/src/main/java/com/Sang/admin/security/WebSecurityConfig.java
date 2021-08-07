@@ -50,11 +50,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .anyRequest().authenticated()
         .and()
         .formLogin()
-          .loginPage("/login")
-          .usernameParameter("email")
+          .loginPage("/login")             // use a custom login instead of the default one.
+          .usernameParameter("email")      // use email instead of username
           .permitAll()
         .and()
-        .logout()
-          .permitAll();
+          .logout()
+            .permitAll()
+        .and()
+          .rememberMe()
+            .key("somethingIsReallySecured_123098475_soNoOneKnows")             // set fixed key
+            .tokenValiditySeconds(7 * 24 * 60 * 60);              // 7 days in seconds
   }
 }
