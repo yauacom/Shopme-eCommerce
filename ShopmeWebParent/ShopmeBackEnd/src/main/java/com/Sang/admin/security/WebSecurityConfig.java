@@ -58,7 +58,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .permitAll()
         .and()
           .rememberMe()
-            .key("somethingIsReallySecured_123098475_soNoOneKnows")             // set fixed key
-            .tokenValiditySeconds(7 * 24 * 60 * 60);              // 7 days in seconds
+            .key("somethingIsReallySecured_123098475_soNoOneKnows") // set fixed key
+            .tokenValiditySeconds(7 * 24 * 60 * 60);                // 7 days in seconds
   }
 }
