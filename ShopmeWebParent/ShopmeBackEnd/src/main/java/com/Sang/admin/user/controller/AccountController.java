@@ -1,8 +1,9 @@
-package com.Sang.admin.user;
+package com.Sang.admin.user.controller;
 
 import com.Sang.ShopmeCommon.entity.User;
 import com.Sang.admin.FileUploadUtil;
 import com.Sang.admin.security.ShopmeUserDetails;
+import com.Sang.admin.user.service.UserService;
 import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -31,7 +32,7 @@ public class AccountController {
 
     model.addAttribute("user", user);
 
-    return "account_form";
+    return "users/account_form";
   }
 
   @PostMapping("/account/update")

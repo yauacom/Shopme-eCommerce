@@ -1,7 +1,6 @@
 package com.Sang.admin.user.export;
 
 import com.Sang.ShopmeCommon.entity.User;
-import com.Sang.admin.user.AbstractExport;
 import com.lowagie.text.Document;
 import com.lowagie.text.Font;
 import com.lowagie.text.FontFactory;

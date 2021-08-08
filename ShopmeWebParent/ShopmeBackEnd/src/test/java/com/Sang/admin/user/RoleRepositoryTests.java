@@ -3,6 +3,7 @@ package com.Sang.admin.user;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.Sang.ShopmeCommon.entity.Role;
+import com.Sang.admin.user.repository.RoleRepository;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
