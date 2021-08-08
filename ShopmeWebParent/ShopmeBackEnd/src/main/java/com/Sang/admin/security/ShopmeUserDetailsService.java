@@ -1,7 +1,7 @@
 package com.Sang.admin.security;
 
 import com.Sang.ShopmeCommon.entity.User;
-import com.Sang.admin.user.UserRepository;
+import com.Sang.admin.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

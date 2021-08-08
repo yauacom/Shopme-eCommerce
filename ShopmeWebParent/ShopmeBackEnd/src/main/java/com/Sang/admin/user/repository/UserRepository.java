@@ -1,4 +1,4 @@
-package com.Sang.admin.user;
+package com.Sang.admin.user.repository;
 
 import com.Sang.ShopmeCommon.entity.User;
 import org.springframework.data.domain.Page;
